@@ -211,6 +211,7 @@ public class ManipController implements IDisposable {
 		// You may find it helpful to structure your code into a few helper functions; ours is about 150 lines.
 		
 		// TODO#A3 SOLUTION START
+		
 		switch (manip.type) {
 		case Manipulator.Type.SCALE:
 			applyScaling(manip.axis, camera.mViewProjection, object, lastMousePos, curMousePos);

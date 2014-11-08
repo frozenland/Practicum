@@ -15,7 +15,7 @@ public class TexGenSphereNormalMap extends ACTextureGenerator {
 	private int resolution;
 	
 	public TexGenSphereNormalMap() {
-		this.bumpRadius = 0.5f;
+		this.bumpRadius = .5f;
 		this.resolution = 10;
 		this.setSize(new Vector2i(256));
 	}
@@ -30,6 +30,38 @@ public class TexGenSphereNormalMap extends ACTextureGenerator {
 	
 	@Override
 	public void getColor(float u, float v, Color outColor) {
-		// TODO A4: Implement the sphere-disk normal map generation
+
+		float   u_r = u * resolution,
+				v_r = v * resolution;
+		
+		float u_center = Math.round(u_r),
+			  v_center = Math.round(v_r);
+		 
+		double  theta,
+				phi;
+		
+		if (Math.pow((u_r - u_center),2) + Math.pow((v_r - v_center),2) < Math.pow(bumpRadius, 2)) {
+			float u_circleCenter = u_center / resolution,
+				  v_circleCenter = v_center / resolution;
+			
+			theta = u_circleCenter * Math.PI * 2.0;
+			phi = (1 - v_circleCenter) * Math.PI;
+
+		}
+		else { 
+			theta = u * Math.PI * 2.0;
+			phi = (1 - v) * Math.PI;
+		}
+		
+		double  x = -Math.sin(theta) * Math.sin(phi),
+				y = Math.cos(phi),
+				z = -Math.cos(theta) * Math.sin(phi);
+		
+		double  transX = (x + 1) / 2,
+				transY = (y + 1) / 2,
+				transZ = (z + 1) / 2;
+		
+		outColor.set(new Colord(transX,transY,transZ));
+		
 	}
 }
