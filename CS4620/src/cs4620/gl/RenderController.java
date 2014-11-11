@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import cs4620.common.Material;
 import cs4620.common.Mesh;
 import cs4620.common.Scene;
+import cs4620.common.SceneCamera;
 import cs4620.common.SceneObject;
 import cs4620.common.Texture;
 import cs4620.common.event.SceneCollectionModifiedEvent;
@@ -14,7 +15,9 @@ import cs4620.common.event.SceneObjectResourceEvent;
 import cs4620.common.event.SceneReloadEvent;
 import cs4620.common.event.SceneTransformationEvent;
 import egl.IDisposable;
+import egl.math.Matrix4;
 import egl.math.Vector2;
+import egl.math.Vector3;
 
 public class RenderController implements IDisposable {
 	public final SceneEventQueue queue;
@@ -38,6 +41,7 @@ public class RenderController implements IDisposable {
 	}
 	
 	public void update(Renderer r, CameraController camController) {
+		
 		ArrayList<SceneEvent> le = new ArrayList<>();
 		queue.getEvents(le);
 		if(le.size() == 0) return;
@@ -121,5 +125,19 @@ public class RenderController implements IDisposable {
 			env.linkObjectResources();
 			r.buildPasses(env.root);
 		}
+		
+		////////////////////////////////
+
+		for (SceneObject s : scene.objects) {
+			if (!(s instanceof SceneCamera)) s.addRotation(new Vector3(0, (float).5, (float).5));
+			System.out.println(s);
+		}
+		
+//		AnimationObject ao = new AnimationObject(scene);
+//		ao.rotateObject("Sphere", "EarthMaterial", 0.f, (float) .5, (float) .5);
+		
+		////////////////////////////////
+		
+		
 	}
 }
