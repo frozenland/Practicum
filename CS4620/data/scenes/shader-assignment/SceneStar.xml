@@ -4,14 +4,14 @@
     <cubemap>
         <name>EnvMap</name>
         <data>
-            <file>data/textures/Envir/Stars2/</file>
+            <file>data/textures/Envir/Stars/</file>
         </data>
     </cubemap>
 
     <texture>
         <name>EarthTexture</name>
         <data>
-            <file>data/textures/Earth.png</file>
+            <file>data/textures/sun.jpg</file>
         </data>
     </texture>
     
