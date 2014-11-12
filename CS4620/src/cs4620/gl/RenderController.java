@@ -128,12 +128,19 @@ public class RenderController implements IDisposable {
 		
 		////////////////////////////////
 
-		for (SceneObject s : scene.objects) {
-			if (!(s instanceof SceneCamera)) s.addRotation(new Vector3((float).25, (float).5, 0.f));
-		}
+//		for (SceneObject s : scene.objects) {
+//			if (!(s instanceof SceneCamera)) s.addRotation(new Vector3((float).25, (float).5, 0.f));
+//		}
 		
-//		AnimationObject ao = new AnimationObject(scene);
-//		ao.rotateObject("Sphere", "EarthMaterial", 0.f, (float) .5, (float) .5);
+//		try {
+//			scene.objects.get("Star").addRotation(new Vector3((float).25, (float).5, 0.f));
+//		} catch(Exception e) {}
+		
+		try {
+			AnimationObject ao = new AnimationObject(scene);
+			ao.rotateObject("Star",  0.f , (float) .5, (float) .5);
+		} catch(Exception e) {}
+		
 		
 		////////////////////////////////
 		

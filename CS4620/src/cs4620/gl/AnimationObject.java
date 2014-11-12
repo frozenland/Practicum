@@ -23,13 +23,8 @@ public class AnimationObject{
 	 * @param Float rotY : rotation about the y axis
 	 * @param Float rotZ : rotation about the z axis
 	 * */
-	public void rotateObject(String mesh, String material, float rotX, float rotY, float rotZ) {
-		for (SceneObject s : this.scene.objects) {
-			if (s.mesh.equals(mesh) && s.material.equals(material)) {
-				s.addRotation(new Vector3(rotX, rotY, rotZ));
-				return;
-			}
-		}
+	public void rotateObject(String name, float rotX, float rotY, float rotZ) {
+		scene.objects.get(name).addRotation(new Vector3(rotX, rotY, rotZ));
 	}
 	
 }

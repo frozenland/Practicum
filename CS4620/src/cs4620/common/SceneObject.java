@@ -23,7 +23,7 @@ public class SceneObject extends ACUniqueObject implements IXMLDocWriteable {
 		transformation.mulAfter(Matrix4.createTranslation(v));
 	}
 	public void addScale(Vector3 v) {
-		transformation.mulAfter(Matrix4.createScale(v));			
+		transformation.mulAfter(Matrix4.createScale(v));
 	}
 	public void setMatrix(float[] m) {
 		if(m.length != 16) throw new AssertionError("Matrix Must Have 16 Values");

@@ -87,6 +87,8 @@ public class ScenePanel extends JPanel implements ValueUpdatable {
 	JPanel editPanel = new JPanel(new CardLayout());
 	HashMap<DefaultMutableTreeNode, String> nodeToEditor = new HashMap<>();
 	JTextField txtObjectName = new JTextField();
+
+	Vector3 prevScale =new Vector3(-1.f); //keeps track of previous scale in order to properly set new radius
 	
 	public ScenePanel(SceneApp a) {
 		super(new BorderLayout());
@@ -147,7 +149,12 @@ public class ScenePanel extends JPanel implements ValueUpdatable {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// Get A Good Name
-				float radius = Float.parseFloat(txtObjectName.getText());
+				float radius = 1;
+				try {
+					radius = Float.parseFloat(txtObjectName.getText());
+				} catch (Exception e) {
+					radius = 1;
+				}
 				if(Float.isNaN(radius)) return;
 				
 				// Create A Scene Object
@@ -167,7 +174,10 @@ public class ScenePanel extends JPanel implements ValueUpdatable {
 				
 				// Add New Object If Non-existent
 				SceneObject so = app.scene.objects.get("Star");
-				so.addScale(new Vector3(radius, radius, radius));
+				so.addScale(prevScale);
+				
+				so.addScale(new Vector3(radius));
+				prevScale.set(1 / radius);
 //				if(so == null) {
 //					app.scene.addObject(new NameBindSceneObject(name, o));
 //				}

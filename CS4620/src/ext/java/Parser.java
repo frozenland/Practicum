@@ -1,4 +1,4 @@
-package src.ext.java;
+package ext.java;
 
 import java.io.File;
 import java.lang.reflect.Array;
