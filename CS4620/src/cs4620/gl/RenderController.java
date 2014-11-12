@@ -129,7 +129,7 @@ public class RenderController implements IDisposable {
 		////////////////////////////////
 
 		for (SceneObject s : scene.objects) {
-			if (!(s instanceof SceneCamera)) s.addRotation(new Vector3(0, (float).5, (float).5));
+			if (!(s instanceof SceneCamera)) s.addRotation(new Vector3((float).25, (float).5, 0.f));
 		}
 		
 //		AnimationObject ao = new AnimationObject(scene);

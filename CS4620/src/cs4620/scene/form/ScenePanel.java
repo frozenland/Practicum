@@ -67,6 +67,7 @@ import cs4620.common.SceneLight;
 import cs4620.common.SceneObject;
 import cs4620.common.event.SceneReloadEvent;
 import cs4620.scene.SceneApp;
+import egl.math.Vector3;
 import ext.java.Parser;
 
 public class ScenePanel extends JPanel implements ValueUpdatable {
@@ -119,6 +120,7 @@ public class ScenePanel extends JPanel implements ValueUpdatable {
 		JPanel southPanel = new JPanel();
 		southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.Y_AXIS));
 		
+		
 		JButton loadScene = new JButton("Load Scene XML");
 		loadScene.setAlignmentX(Component.CENTER_ALIGNMENT);
 		loadScene.addActionListener(new ActionListener() {
@@ -139,39 +141,40 @@ public class ScenePanel extends JPanel implements ValueUpdatable {
 							return;}}}}});
 		actionPanel.add(loadScene);
 		
-		JButton newObject = new JButton("Add Blank");
-		newObject.setAlignmentX(Component.CENTER_ALIGNMENT);
-		newObject.addActionListener(new ActionListener() {
+		JButton setRadius = new JButton("Set the radius");
+		setRadius.setAlignmentX(Component.CENTER_ALIGNMENT);
+		setRadius.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// Get A Good Name
-				String name = txtObjectName.getText();
-				if(name == null) return;
-				name = name.trim();
+				float radius = Float.parseFloat(txtObjectName.getText());
+				if(Float.isNaN(radius)) return;
 				
 				// Create A Scene Object
-				SceneObject o;
-				if(name.toLowerCase().startsWith("camera-")) {
-					name = name.substring(7);
-					o = new SceneCamera();
-				}
-				else if (name.toLowerCase().startsWith("light-")) {
-					name = name.substring(6);
-					o = new SceneLight();
-				}
-				else {
-					o = new SceneObject();
-				}
-				if(name.length() < 1) return;
+//				SceneObject o;
+//				if(name.toLowerCase().startsWith("camera-")) {
+//					name = name.substring(7);
+//					o = new SceneCamera();
+//				}
+//				else if (name.toLowerCase().startsWith("light-")) {
+//					name = name.substring(6);
+//					o = new SceneLight();
+//				}
+//				else {
+//					o = new SceneObject();
+//				}
+//				if(name.length() < 1) return;
 				
 				// Add New Object If Non-existent
-				SceneObject so = app.scene.objects.get(name);
-				if(so == null) {
-					app.scene.addObject(new NameBindSceneObject(name, o));
-				}
+				SceneObject so = app.scene.objects.get("Star");
+				so.addScale(new Vector3(radius, radius, radius));
+//				if(so == null) {
+//					app.scene.addObject(new NameBindSceneObject(name, o));
+//				}
 			}
 		});
-		actionPanel.add(newObject);
+
+		actionPanel.add(setRadius);
 		actionPanel.add(txtObjectName);
 		
 		JButton deleteObject = new JButton("Delete");

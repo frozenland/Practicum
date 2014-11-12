@@ -44,7 +44,7 @@
 	</mesh>
 
 	<object>
-		<name>Sphere</name>
+		<name>Star</name>
 		<data>
 			<mesh>Sphere</mesh>
 			<material>EarthMaterial</material>
