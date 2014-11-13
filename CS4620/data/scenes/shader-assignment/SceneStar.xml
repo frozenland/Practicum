@@ -26,6 +26,24 @@
         </data>
     </material>
 
+    <texture>
+        <name>MoonTexture</name>
+        <data>
+            <file>data/textures/MoonLonLat.png</file>
+        </data>
+    </texture>
+    
+	<material>
+        <name>MoonMaterial</name>
+        <data>
+            <type>Phong</type>
+            <diffuse>
+                <texture>MoonTexture</texture>
+            </diffuse>
+            <shininess>50</shininess>
+        </data>
+    </material>
+
     <material>
         <name>Ambient</name>
         <data>
@@ -84,12 +102,12 @@
         </data>
     </object>
 
-        <object>
+    <object>
         <name>LightObj0</name>
         <data>
             <mesh>Sphere</mesh>
             <scale>0.1 0.1 0.1</scale>
-            <translation>0.75 1.5 0</translation>
+            <translation>10000 10000 10000</translation>
 
             <material>Ambient</material>
         </data>
@@ -107,7 +125,7 @@
         <data>
             <mesh>Sphere</mesh>
             <scale>0.1 0.1 0.1</scale>
-            <translation>-0.75 -1.5 2</translation>
+            <translation>10000 10000 100000</translation>
 
             <material>Ambient</material>
         </data>

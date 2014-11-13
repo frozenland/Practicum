@@ -65,7 +65,9 @@ import cs4620.common.Scene.NameBindSceneObject;
 import cs4620.common.SceneCamera;
 import cs4620.common.SceneLight;
 import cs4620.common.SceneObject;
+import cs4620.common.event.SceneObjectResourceEvent;
 import cs4620.common.event.SceneReloadEvent;
+import cs4620.gl.AnimationObject;
 import cs4620.scene.SceneApp;
 import egl.math.Vector3;
 import ext.java.Parser;
@@ -175,6 +177,21 @@ public class ScenePanel extends JPanel implements ValueUpdatable {
 				// Add New Object If Non-existent
 				SceneObject so = app.scene.objects.get("Star");
 				so.addScale(prevScale);
+				
+				if (radius > 2) {
+					try {
+						AnimationObject ao = new AnimationObject(app.scene);
+						ao.changeTexture("Star", "MoonMaterial");
+						app.scene.sendEvent(new SceneObjectResourceEvent(so, SceneObjectResourceEvent.Type.Material));
+					} catch(Exception e) {}
+				}
+				else {
+					try {
+						AnimationObject ao = new AnimationObject(app.scene);
+						ao.changeTexture("Star", "EarthMaterial");
+						app.scene.sendEvent(new SceneObjectResourceEvent(so, SceneObjectResourceEvent.Type.Material));
+					} catch(Exception e) {}
+				}
 				
 				so.addScale(new Vector3(radius));
 				prevScale.set(1 / radius);
