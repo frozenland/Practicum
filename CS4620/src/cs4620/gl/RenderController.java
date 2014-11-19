@@ -140,11 +140,10 @@ public class RenderController implements IDisposable {
 		
 		try {
 			AnimationObject ao = new AnimationObject(scene);
-			ao.rotateObject("Star",  0.f , (float) theta, (float) theta);
 			ao.reset("Star");
+			ao.rotateObject("Star",  0.f, (float)theta, 0.f);
 			ao.wobbleRadius("Star", theta);
-//			ao.reset("Star");
-			theta += (Math.random() + .1) * (Math.PI / 30);
+			theta += (Math.random() + .1) * (Math.PI / 10);
 		} catch(Exception e) {}
 		
 		
