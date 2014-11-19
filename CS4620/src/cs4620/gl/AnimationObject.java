@@ -17,7 +17,6 @@ public class AnimationObject{
 		this.transformation = scene.objects.get("Star").transformation;
 	}
 	
-	
 	/**Rotates an object given that objects mesh and material
 	 * @param String name : the name of the object
 	 * @param Float rotX : rotation about the x axis
@@ -33,7 +32,7 @@ public class AnimationObject{
 	}
 	
 	public void wobbleRadius(String name, double theta) {
-		double cos = 1 + .1 * Math.cos(theta);
+		double cos = 1 + .05 * Math.cos(theta);
 		SceneObject star = scene.objects.get(name);
 		star.addScale(new Vector3((float)cos));;
 	}
