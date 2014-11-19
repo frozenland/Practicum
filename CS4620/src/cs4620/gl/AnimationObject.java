@@ -10,9 +10,11 @@ import egl.math.Vector3;
 
 public class AnimationObject{
 	public final Scene scene;
+	public Matrix4 transformation;
 
 	public AnimationObject(Scene scene) {
 		this.scene = scene;
+		this.transformation = scene.objects.get("Star").transformation;
 	}
 	
 	
@@ -28,6 +30,17 @@ public class AnimationObject{
 	
 	public void changeTexture(String name, String newTexture) {
 		scene.objects.get(name).setMaterial(newTexture);
+	}
+	
+	public void wobbleRadius(String name, double theta) {
+		double cos = 1 + .1 * Math.cos(theta);
+		SceneObject star = scene.objects.get(name);
+		star.addScale(new Vector3((float)cos));;
+	}
+	
+	public void reset(String name) {
+		SceneObject star = scene.objects.get(name);
+		star.transformation.mulAfter(this.transformation.clone().invert());
 	}
 	
 }

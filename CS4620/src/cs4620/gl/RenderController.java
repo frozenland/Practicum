@@ -24,6 +24,7 @@ public class RenderController implements IDisposable {
 	public final Scene scene;
 	public RenderEnvironment env;
 	private boolean requestNewScene = false;
+	private double theta = 0;
 	
 	public RenderController(Scene s, Vector2 viewSize) {
 		scene = s;
@@ -136,10 +137,17 @@ public class RenderController implements IDisposable {
 //			scene.objects.get("Star").addRotation(new Vector3((float).25, (float).5, 0.f));
 //		} catch(Exception e) {}
 		
+		
 		try {
 			AnimationObject ao = new AnimationObject(scene);
-			ao.rotateObject("Star",  0.f , (float) .5, (float) .5);
+			ao.rotateObject("Star",  0.f , (float) theta, (float) theta);
+			ao.reset("Star");
+			ao.wobbleRadius("Star", theta);
+//			ao.reset("Star");
+			theta += (Math.random() + .1) * (Math.PI / 30);
 		} catch(Exception e) {}
+		
+		
 		
 		
 		////////////////////////////////
