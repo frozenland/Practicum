@@ -1,16 +1,16 @@
-TIME:                         Tue Nov 18 18:41:36 EST 2014
+TIME:                         Tue Nov 18 22:47:49 EST 2014
 
 === Java System Properties ===
-java.version:                 1.7.0_25
+java.version:                 1.7.0_11
 java.runtime.name:            Java(TM) SE Runtime Environment
 java.vm.name:                 Java HotSpot(TM) 64-Bit Server VM
-java.vm.version:              23.25-b01
-os.name:                      Mac OS X
-os.version:                   10.10
+java.vm.version:              23.6-b04
+os.name:                      Windows 7
+os.version:                   6.1
 
 ====== OpenGL Properties =====
-GL_VENDOR:                    Intel Inc.
-GL_VERSION:                   2.1 INTEL-10.0.86
-GL_RENDERER:                  Intel Iris Pro OpenGL Engine
-GL_SHADING_LANGUAGE_VERSION:  1.20
+GL_VENDOR:                    ATI Technologies Inc.
+GL_VERSION:                   4.2.12337 Compatibility Profile Context 13.101.0.0
+GL_RENDERER:                  AMD Radeon HD 7970M
+GL_SHADING_LANGUAGE_VERSION:  4.30
 
