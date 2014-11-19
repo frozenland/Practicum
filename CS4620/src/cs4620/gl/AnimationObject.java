@@ -9,12 +9,12 @@ import egl.math.Matrix4;
 import egl.math.Vector3;
 
 public class AnimationObject{
-	public final Scene scene;
-	public Matrix4 transformation;
+	private final Scene scene;
+	private Matrix4 tInverse;
 
 	public AnimationObject(Scene scene) {
 		this.scene = scene;
-		this.transformation = scene.objects.get("Star").transformation;
+		this.tInverse = scene.objects.get("Star").transformation.clone().invert();
 	}
 	
 	/**Rotates an object given that objects mesh and material
@@ -39,7 +39,7 @@ public class AnimationObject{
 	
 	public void reset(String name) {
 		SceneObject star = scene.objects.get(name);
-		star.transformation.mulAfter(this.transformation.clone().invert());
+		star.transformation.mulAfter(this.tInverse);
 	}
 	
 }

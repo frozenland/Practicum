@@ -107,7 +107,7 @@ public class RenderMaterial implements IDisposable {
 	public final Material sceneMaterial;
 	
 	public int unWorld, unWorldIT, unV, unP, unVP, unLPos, unLIntensity, unLCount, unCubeMap, unWorldCam, 
-		unShininess, unRoughness, unDispMagnitude, unAmbientLIntensity, unExposure;
+		unShininess, unRoughness, unDispMagnitude, unAmbientLIntensity, unExposure, unTime;
 	private FloatBuffer fbLight = NativeMem.createFloatBuffer(16 * 3);
 
 	public RenderMaterial(Material m) {
@@ -181,6 +181,9 @@ public class RenderMaterial implements IDisposable {
 		
 		// Lighting info
 		unLCount = program.getUniform("numLights");
+		
+		//time
+		unTime = program.getUniform("vTime");
 		
 		// Try with and without suffix...
 		unLPos = program.getUniform("lightPosition");

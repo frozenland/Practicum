@@ -105,6 +105,7 @@ public class Renderer implements IDisposable {
 	}
 	
 	public void draw(RenderCamera camera, ArrayList<RenderLight> lights, RasterizerState rs) {
+		
 		DepthState.DEFAULT.set();
 		BlendState.OPAQUE.set();
 		if(rs != null)

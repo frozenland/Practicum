@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <scene>
-	
     <cubemap>
         <name>EnvMap</name>
         <data>
@@ -9,22 +8,11 @@
     </cubemap>
 
     <texture>
-        <name>EarthTexture</name>
+        <name>StarTexture</name>
         <data>
-            <file>data/textures/sun.jpg</file>
+            <file>data/textures/startextures/bright/ostar.jpg</file>
         </data>
     </texture>
-    
-	<material>
-        <name>EarthMaterial</name>
-        <data>
-            <type>Phong</type>
-            <diffuse>
-                <texture>EarthTexture</texture>
-            </diffuse>
-            <shininess>50</shininess>
-        </data>
-    </material>
 
     <texture>
         <name>MoonTexture</name>
@@ -34,6 +22,17 @@
     </texture>
     
 	<material>
+        <name>StarMaterial</name>
+        <data>
+            <type>Phong</type>
+            <diffuse>
+                <texture>StarTexture</texture>
+            </diffuse>
+            <shininess>50</shininess>
+        </data>
+    </material>
+    
+	<material>
         <name>MoonMaterial</name>
         <data>
             <type>Phong</type>
@@ -41,6 +40,13 @@
                 <texture>MoonTexture</texture>
             </diffuse>
             <shininess>50</shininess>
+        </data>
+    </material>
+
+    <material>
+        <name>NoiseMaterial</name>
+        <data>
+            <type>Noise</type>
         </data>
     </material>
 
@@ -65,7 +71,8 @@
 		<name>Star</name>
 		<data>
 			<mesh>Sphere</mesh>
-			<material>EarthMaterial</material>
+			<material>StarMaterial</material>
+            <material>NoiseMaterial</material>
 		</data>
 	</object>
     

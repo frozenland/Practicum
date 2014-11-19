@@ -1,5 +1,6 @@
 package cs4620.gl;
 
+import java.sql.Time;
 import java.util.ArrayList;
 
 import cs4620.common.Material;
@@ -24,7 +25,9 @@ public class RenderController implements IDisposable {
 	public final Scene scene;
 	public RenderEnvironment env;
 	private boolean requestNewScene = false;
-	private double t = 0;
+	private double t = 0,
+				timeDelta = 0; // use created counter rather than system time
+							// to be able to sync with every call to update
 	
 	public RenderController(Scene s, Vector2 viewSize) {
 		scene = s;
@@ -41,6 +44,7 @@ public class RenderController implements IDisposable {
 		return requestNewScene;
 	}
 	
+	// called ~60 times a sec
 	public void update(Renderer r, CameraController camController) {
 		
 		ArrayList<SceneEvent> le = new ArrayList<>();
@@ -128,22 +132,21 @@ public class RenderController implements IDisposable {
 		}
 		
 		////////////////////////////////
-
-//		for (SceneObject s : scene.objects) {
-//			if (!(s instanceof SceneCamera)) s.addRotation(new Vector3((float).25, (float).5, 0.f));
-//		}
-		
-//		try {
-//			scene.objects.get("Star").addRotation(new Vector3((float).25, (float).5, 0.f));
-//		} catch(Exception e) {}
-		
-		
+		timeDelta +=(1.d/60.d);
+		double seconds= Math.floor(timeDelta);
+		System.out.println(seconds);
 		try {
 			AnimationObject ao = new AnimationObject(scene);
 			ao.reset("Star");
 			ao.rotateObject("Star", 0.f, (float)t / 4, 0.f);
-			ao.wobbleRadius("Star", t / 50);
+			if (seconds > 10) {
+				ao.wobbleRadius("Star", t/30 * Math.min((timeDelta - 4) / 7, 20));
+			}
+			else {
+				ao.wobbleRadius("Star", t / 30);
+			}
 			t += (Math.random()/2 + .5) * 1;
+			
 		} catch(Exception e) {}
 	}
 }
