@@ -108,6 +108,9 @@ public class RenderMaterial implements IDisposable {
 	
 	public int unWorld, unWorldIT, unV, unP, unVP, unLPos, unLIntensity, unLCount, unCubeMap, unWorldCam, 
 		unShininess, unRoughness, unDispMagnitude, unAmbientLIntensity, unExposure, unTime;
+	
+	float periodic_counter = 0;
+	
 	private FloatBuffer fbLight = NativeMem.createFloatBuffer(16 * 3);
 
 	public RenderMaterial(Material m) {
@@ -321,5 +324,9 @@ public class RenderMaterial implements IDisposable {
 		if (unAmbientLIntensity != GL.BadUniformLocation) {
 			GL20.glUniform3f(unAmbientLIntensity, (float)ambientLightColor.x, (float)ambientLightColor.y, (float)ambientLightColor.z);
 		}
+		
+		/////////
+		periodic_counter+= .01;
+		if(unTime != GL.BadUniformLocation) GL20.glUniform1f(unTime,  periodic_counter);
 	}
 }

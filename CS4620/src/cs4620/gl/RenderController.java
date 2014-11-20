@@ -134,7 +134,7 @@ public class RenderController implements IDisposable {
 		////////////////////////////////
 		timeDelta +=(1.d/60.d);
 		double seconds= Math.floor(timeDelta);
-		System.out.println(seconds);
+//		System.out.println(seconds);
 		try {
 			AnimationObject ao = new AnimationObject(scene);
 			ao.reset("Star");

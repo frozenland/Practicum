@@ -38,12 +38,18 @@ float rand(vec2 co){
 }
 
 float red;
+float blue;
+float green;
 
 void main() {
     float c = 1;
     vec3 N = normalize(fN);
     vec3 V = normalize(worldCam - worldPos.xyz);
-//    red = mod(time,1.0);
-    vec3 v = vec3(rand(fUV), rand(fUV), 1);
+    red = (cos(vTime) + 1) / 2;
+    green =(sin(vTime) + 1) / 2;
+//    blue = mod(1-vTime, 1.0);
+//    green = mod(.5*vTime, 1.0);
+//    vec3 v = vec3(rand(fUV), rand(fUV), cos(vTime)*.1);
+    vec3 v = vec3(red, green, 1);
     gl_FragColor = vec4(v, 0);
 }
