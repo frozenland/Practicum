@@ -71,7 +71,6 @@
 		<name>Star</name>
 		<data>
 			<mesh>Sphere</mesh>
-			<material>StarMaterial</material>
             <material>NoiseMaterial</material>
 		</data>
 	</object>

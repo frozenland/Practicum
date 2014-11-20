@@ -181,15 +181,15 @@ public class ScenePanel extends JPanel implements ValueUpdatable {
 				if (radius > 2) {
 					try {
 						AnimationObject ao = new AnimationObject(app.scene);
-						ao.changeTexture("Star", "MoonMaterial");
-						app.scene.sendEvent(new SceneObjectResourceEvent(so, SceneObjectResourceEvent.Type.Material));
+//						ao.changeTexture("Star", "MoonMaterial");
+//						app.scene.sendEvent(new SceneObjectResourceEvent(so, SceneObjectResourceEvent.Type.Material));
 					} catch(Exception e) {}
 				}
 				else {
 					try {
 						AnimationObject ao = new AnimationObject(app.scene);
-						ao.changeTexture("Star", "EarthMaterial");
-						app.scene.sendEvent(new SceneObjectResourceEvent(so, SceneObjectResourceEvent.Type.Material));
+//						ao.changeTexture("Star", "EarthMaterial");
+//						app.scene.sendEvent(new SceneObjectResourceEvent(so, SceneObjectResourceEvent.Type.Material));
 					} catch(Exception e) {}
 				}
 				

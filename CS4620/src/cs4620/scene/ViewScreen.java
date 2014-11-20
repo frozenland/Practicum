@@ -16,7 +16,10 @@ import blister.ScreenState;
 import blister.input.KeyboardEventDispatcher;
 import blister.input.KeyboardKeyEventArgs;
 import cs4620.common.Scene;
+import cs4620.common.SceneObject;
+import cs4620.common.event.SceneObjectResourceEvent;
 import cs4620.common.event.SceneReloadEvent;
+import cs4620.gl.AnimationObject;
 import cs4620.gl.CameraController;
 import cs4620.gl.GridRenderer;
 import cs4620.gl.RenderCamera;
@@ -79,6 +82,12 @@ public class ViewScreen extends GameScreen {
 	public void destroy(GameTime gameTime) {
 	}
 
+	private boolean starTexture = true;
+	AnimationObject ao;
+	SceneObject so;
+	
+	
+	
 	/**
 	 * Add Scene Data Hotkeys
 	 */
@@ -86,6 +95,18 @@ public class ViewScreen extends GameScreen {
 		@Override
 		public void receive(Object sender, KeyboardKeyEventArgs args) {
 			switch (args.key) {
+			///////////////////
+			case Keyboard.KEY_T:
+				try {
+					ao = new AnimationObject(app.scene);
+					so = app.scene.objects.get("Star");
+				} catch (Exception e){}
+				if (starTexture)ao.changeTexture("Star", "StarMaterial");
+				else ao.changeTexture("Star", "NoiseMaterial");
+				app.scene.sendEvent(new SceneObjectResourceEvent(so, SceneObjectResourceEvent.Type.Material));
+				starTexture = !starTexture;
+				break;
+			///////////////////
 			case Keyboard.KEY_M:
 				if(!args.getAlt()) return;
 				if(dataMaterial != null) {
