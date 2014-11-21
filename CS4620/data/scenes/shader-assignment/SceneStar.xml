@@ -59,6 +59,13 @@
             </diffuse>
         </data>
     </material>
+
+    <material>
+        <name>ParticleMaterial</name>
+        <data>
+            <type>Particle</type>
+        </data>
+    </material>
 	
 	<mesh>
 		<name>Sphere</name>
@@ -74,6 +81,16 @@
             <material>NoiseMaterial</material>
 		</data>
 	</object>
+
+<!--     <object>
+        <name>Particle</name>
+        <data>
+            <mesh>Sphere</mesh>
+            <material>ParticleMaterial</material>
+            <scale>.1 .1 .1</scale>
+            <translation>10 10 0</translation>
+        </data>
+    </object> -->
     
     <mesh>
         <name>SkyBox.obj</name>

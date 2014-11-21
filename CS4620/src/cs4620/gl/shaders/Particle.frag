@@ -22,34 +22,10 @@ uniform float exposure;
 // 0 : smooth, 1: rough
 uniform float roughness;
 
-varying vec2 fUV;
-varying vec3 fN; // normal at the vertex
 varying vec4 worldPos; // vertex position in world coordinates
 
 uniform float vTime;
 
-float rand(vec2 co){
-    float a = 12.9898;
-    float b = 78.233;
-    float c = 43758.5453;
-    float dt= dot(co.xy ,vec2(a,b));
-    float sn= mod(dt,3.14);
-    return fract(sin(sn) * c) * .4;
-}
-
-float red;
-float blue;
-float green;
-
 void main() {
-    float c = 1;
-    vec3 N = normalize(fN);
-    vec3 V = normalize(worldCam - worldPos.xyz);
-    red = (cos(vTime) + 1) / 2;
-    green =(sin(vTime) + 1) / 2;
-//    blue = mod(1-vTime, 1.0);
-//    green = mod(.5*vTime, 1.0);
-    vec3 v = vec3(rand(fUV), rand(fUV), 1);
-//    vec3 v = vec3(red, green, 1);
-    gl_FragColor = vec4(v, 0);
+    gl_FragColor = vec4(0, 1, 0, 0);
 }

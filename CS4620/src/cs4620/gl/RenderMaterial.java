@@ -107,9 +107,10 @@ public class RenderMaterial implements IDisposable {
 	public final Material sceneMaterial;
 	
 	public int unWorld, unWorldIT, unV, unP, unVP, unLPos, unLIntensity, unLCount, unCubeMap, unWorldCam, 
-		unShininess, unRoughness, unDispMagnitude, unAmbientLIntensity, unExposure, unTime;
+		unShininess, unRoughness, unDispMagnitude, unAmbientLIntensity, unExposure, unTime, unVelocity;
 	
-	float periodic_counter = 0;
+	float periodic_counter = 0,
+		periodic_velocity = 1;
 	
 	private FloatBuffer fbLight = NativeMem.createFloatBuffer(16 * 3);
 
@@ -187,6 +188,7 @@ public class RenderMaterial implements IDisposable {
 		
 		//time
 		unTime = program.getUniform("vTime");
+		unVelocity= program.getUniform("vVelocity");
 		
 		// Try with and without suffix...
 		unLPos = program.getUniform("lightPosition");
@@ -327,6 +329,8 @@ public class RenderMaterial implements IDisposable {
 		
 		/////////
 		periodic_counter+= .01;
+		periodic_velocity += (9.8 * periodic_counter) * .1;
 		if(unTime != GL.BadUniformLocation) GL20.glUniform1f(unTime,  periodic_counter);
+		if(unVelocity != GL.BadUniformLocation) GL20.glUniform1f(unVelocity, periodic_velocity);
 	}
 }
