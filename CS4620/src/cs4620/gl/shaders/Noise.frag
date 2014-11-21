@@ -20,7 +20,7 @@ uniform float exposure;
 
 // Shading Information
 // 0 : smooth, 1: rough
-uniform float roughness;
+uniform float shininess;
 
 varying vec2 fUV;
 varying vec3 fN; // normal at the vertex
@@ -45,11 +45,37 @@ void main() {
     float c = 1;
     vec3 N = normalize(fN);
     vec3 V = normalize(worldCam - worldPos.xyz);
+    
+	vec4 finalColor = vec4(0.0, 0.0, 0.0, 0.0);
+
+	for (int i = 0; i < numLights; i++) {
+	  float r = length(lightPosition[i] - worldPos.xyz);
+	  vec3 L = normalize(lightPosition[i] - worldPos.xyz); 
+	  vec3 H = normalize(L + V);
+
+	  // calculate diffuse term
+	  vec4 Idiff = getDiffuseColor(fUV) * max(dot(N, L), 0.0);
+	  Idiff = clamp(Idiff, 0.0, 1.0);
+
+	  // calculate specular term
+	  vec4 Ispec = getSpecularColor(fUV) * pow(max(dot(N, H), 0.0), shininess);
+	  Ispec = clamp(Ispec, 0.0, 1.0);
+	  
+	  // calculate ambient term
+	  vec4 Iamb = getDiffuseColor(fUV);
+	  Iamb = clamp(Iamb, 0.0, 1.0);
+
+	  finalColor += vec4(lightIntensity[i], 0.0) * (Idiff + Ispec) / (r*r) + vec4(ambientLightIntensity, 0.0) * Iamb;
+	}
     red = (cos(vTime) + 1) / 2;
     green =(sin(vTime) + 1) / 2;
 //    blue = mod(1-vTime, 1.0);
 //    green = mod(.5*vTime, 1.0);
-//    vec3 v = vec3(rand(fUV), rand(fUV), cos(vTime)*.1);
-    vec3 v = vec3(red, green, 1);
-    gl_FragColor = vec4(v, 0);
+    //vec3 v = vec3(rand(fUV), rand(fUV), 1);//cos(vTime)*.1);
+    //vec3 v = vec3(.5,.5,.5);
+    //vec3 v = vec3(red, green, 1);
+
+    //gl_FragColor = vec4(v, 0);
+    vec4 modifier = vec4(rand(fUV)/3, rand(fUV)/3, rand(fUV)/3, 0);
+    gl_FragColor = (finalColor + modifier) * exposure;
 }
