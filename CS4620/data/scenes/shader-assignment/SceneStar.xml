@@ -47,6 +47,10 @@
         <name>NoiseMaterial</name>
         <data>
             <type>Noise</type>
+            <diffuse>
+                <texture>StarTexture</texture>
+            </diffuse>
+            <shininess>50</shininess>
         </data>
     </material>
 
@@ -164,7 +168,7 @@
     <object>
         <name>AmbientLight</name>
         <data type="SceneLight">
-            <intensity>.5 .5 .5</intensity>
+            <intensity>.4 .4 .4</intensity>
             <isAmbient>true</isAmbient>
         </data>
     </object>
