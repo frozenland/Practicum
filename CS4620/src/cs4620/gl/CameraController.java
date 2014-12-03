@@ -16,7 +16,7 @@ public class CameraController {
 	protected boolean prevFrameButtonDown = false;
 	protected int prevMouseX, prevMouseY;
 	
-	protected boolean orbitMode = false;
+	protected boolean orbitMode = true;
 	
 	public CameraController(Scene s, RenderEnvironment re, RenderCamera c) {
 		scene = s;
@@ -38,6 +38,7 @@ public class CameraController {
 	public void update(double et) {
 		Vector3 motion = new Vector3();
 		Vector3 rotation = new Vector3();
+		
 		
 		if(Keyboard.isKeyDown(Keyboard.KEY_W)) { motion.add(0, 0, -1); }
 		if(Keyboard.isKeyDown(Keyboard.KEY_S)) { motion.add(0, 0, 1); }

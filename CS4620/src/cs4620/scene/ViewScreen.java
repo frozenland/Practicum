@@ -31,6 +31,8 @@ import cs4620.scene.form.RPMeshData;
 import cs4620.scene.form.RPTextureData;
 import cs4620.scene.form.ScenePanel;
 import egl.GLError;
+import egl.math.Matrix3;
+import egl.math.Matrix4;
 import egl.math.Vector2;
 import egl.math.Vector3;
 import ext.csharp.ACEventFunc;
@@ -44,6 +46,16 @@ public class ViewScreen extends GameScreen {
 	boolean wasPickPressedLast = false;
 	boolean showGrid = false;
 	// changed to false
+	
+	// Jason: event handler:
+	boolean bHappening = false;
+	double dStartTime = 0;
+	double dNextOccurrence = 0;
+	
+	// End Jason
+	
+	
+	
 	
 	SceneApp app;
 	ScenePanel sceneTree;
@@ -194,6 +206,83 @@ public class ViewScreen extends GameScreen {
 	public void update(GameTime gameTime) {
 		pick = false;
 		int curCamScroll = 0;
+		
+		int iNumParticles = 200;
+		
+		// Jason: -----------------------------
+				if (bHappening){
+					if (gameTime.total-dStartTime > 10){
+						bHappening = false;
+						for (int i = 0; i < iNumParticles; i++){
+							app.scene.objects.get("particle_"+i).transformation.set(new Matrix4());
+						}
+					} else {
+						float et = (float)gameTime.elapsed;
+						//Vector3 v3_speed = new Vector3((float)(-5*Math.cos((gameTime.total-dStartTime)/3*2*Math.PI) + 5), (float)(5*Math.sin((gameTime.total-dStartTime)/3*2*Math.PI)), 0f);
+						et = et/3;
+						try {
+							//app.scene.objects.get("Debris_1").transformation.set(new Matrix4());
+							//app.scene.objects.get("Debris_1").addScale(new Vector3(0.1f, 0.1f, 0.1f));
+							
+							//app.scene.objects.get("Debris_1").addTranslation(v3_speed);
+							
+							
+							for (int i = 0; i < iNumParticles; i++){
+								SceneObject sco = app.scene.objects.get("particle_"+i);
+								Vector3 v3_speed = sco.v3_speed;
+								sco.addTranslation(new Vector3(v3_speed.x*et, v3_speed.y*et, v3_speed.z*et));
+							}
+							
+						} catch (Exception ex){}
+					}
+				} else {
+					float fRand = (float)Math.random();
+					if (fRand < 1/60f){
+						bHappening = true;
+						
+						
+						Vector3 v3_loc = new Vector3(1,1,1);
+						Matrix4.createRotationX((float)((Math.random()-0.5)*2*Math.PI)).mulDir(v3_loc);
+						Matrix4.createRotationY((float)((Math.random()-0.5)*2*Math.PI)).mulDir(v3_loc);
+						Matrix4.createRotationZ((float)((Math.random()-0.5)*2*Math.PI)).mulDir(v3_loc);
+						v3_loc.normalize();
+						
+						
+						float fSpeed_coeff = 10;
+						Vector3 v3_speed = new Vector3(v3_loc);
+						v3_speed.mul(fSpeed_coeff);
+						
+						for (int i = 0; i < iNumParticles; i++){
+							SceneObject sco = app.scene.objects.get("particle_"+i);
+							sco.addTranslation(v3_loc);
+							
+							Vector3 v3_perp1 = new Vector3(-v3_loc.y, v3_loc.x, 0);
+							Vector3 v3_perp2 = new Vector3(-v3_loc.z, 0, v3_loc.x);
+							Vector3 v3_perp = new Vector3();
+							fRand = (float)Math.random()-0.5f;
+							v3_perp1.mul(2*fRand);
+							fRand = (float)Math.random()-0.5f;
+							v3_perp2.mul(2*fRand);
+							if (v3_perp1.equals(new Vector3(0,0,0)) ){
+								// in case they are both zero vectors
+								v3_perp1.set(0.5f, 0.5f, 0.5f);
+							}
+							
+							v3_perp.add(v3_perp1).add(v3_perp2);
+							v3_perp.normalize();
+							v3_perp.mul((float)Math.random());
+							
+							fRand = (float)Math.random();
+							sco.v3_speed.set(v3_speed.x+v3_perp.x, v3_speed.y+v3_perp.y, v3_speed.z+v3_perp.z);
+							sco.v3_speed.mul(fRand);
+						}
+						dStartTime = gameTime.total;
+					}
+				}
+				
+				
+				// End Jason -------------------------
+		
 
 		if(Keyboard.isKeyDown(Keyboard.KEY_EQUALS)) curCamScroll++;
 		if(Keyboard.isKeyDown(Keyboard.KEY_MINUS)) curCamScroll--;
@@ -206,9 +295,12 @@ public class ViewScreen extends GameScreen {
 		prevCamScroll = curCamScroll;
 		
 		if(camController.camera != null) {
+			// This part is called every time an update event occurs. Jason's bookmark.
 			camController.update(gameTime.elapsed);
 			manipController.checkMouse(Mouse.getX(), Mouse.getY(), camController.camera);
 		}
+		
+		
 		
 		if(Mouse.isButtonDown(1) || Mouse.isButtonDown(0) && (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) || Keyboard.isKeyDown(Keyboard.KEY_RCONTROL))) {
 			if(!wasPickPressedLast) pick = true;
@@ -224,7 +316,7 @@ public class ViewScreen extends GameScreen {
 	
 	@Override
 	public void draw(GameTime gameTime) {
-		rController.update(renderer, camController);
+		rController.update(renderer, camController, gameTime);
 
 		if(pick && camController.camera != null) {
 			manipController.checkPicking(renderer, camController.camera, Mouse.getX(), Mouse.getY());
@@ -236,7 +328,7 @@ public class ViewScreen extends GameScreen {
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		
 		if(camController.camera != null){
-			renderer.draw(camController.camera, rController.env.lights);
+			renderer.draw(camController.camera, rController.env.lights, gameTime);
 			manipController.draw(camController.camera);
 			if (showGrid)
 				gridRenderer.draw(camController.camera);

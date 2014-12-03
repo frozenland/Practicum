@@ -12,6 +12,7 @@ public class SceneObject extends ACUniqueObject implements IXMLDocWriteable {
 	public String parent = null;
 	public String material = null;
 	public String mesh = null;
+	public Vector3 v3_speed = new Vector3();
 	
 	public void addRotation(Vector3 rot) {
 		rot = rot.clone().mul((float)(Math.PI/180.0));

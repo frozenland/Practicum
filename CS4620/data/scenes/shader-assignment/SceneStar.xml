@@ -13,6 +13,20 @@
             <file>data/textures/startextures/bright/ostar.jpg</file>
         </data>
     </texture>
+	
+	<texture>
+        <name>bright_particle</name>
+        <data>
+            <file>data/textures/bright_particle.png</file>
+        </data>
+    </texture>
+	
+	<texture>
+        <name>Debris_Texture</name>
+        <data>
+            <file>data/textures/startextures/sun.jpg</file>
+        </data>
+    </texture>
 
     <texture>
         <name>MoonTexture</name>
@@ -27,6 +41,17 @@
             <type>Phong</type>
             <diffuse>
                 <texture>StarTexture</texture>
+            </diffuse>
+            <shininess>50</shininess>
+        </data>
+    </material>
+	
+	<material>
+        <name>Debris_Material</name>
+        <data>
+            <type>Phong</type>
+            <diffuse>
+                <texture>Debris_Texture</texture>
             </diffuse>
             <shininess>50</shininess>
         </data>
@@ -51,6 +76,17 @@
                 <texture>StarTexture</texture>
             </diffuse>
             <shininess>50</shininess>
+        </data>
+    </material>
+	
+	<material>
+        <name>particle_Material</name>
+        <data>
+            <type>ParticleCloud</type>
+            <diffuse>
+                <texture>bright_particle</texture>
+            </diffuse>
+            <shininess>500</shininess>
         </data>
     </material>
 
@@ -85,6 +121,17 @@
             <material>NoiseMaterial</material>
 		</data>
 	</object>
+
+	<object>
+		<name>ParticleCloud_1</name>
+		<data>
+			<mesh>ParticleCloud</mesh>
+            <material>particle_Material</material>
+		</data>
+	</object>
+	
+
+	
 
 <!--     <object>
         <name>Particle</name>

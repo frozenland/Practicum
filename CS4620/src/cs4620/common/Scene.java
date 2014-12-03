@@ -27,8 +27,10 @@ import cs4620.common.texture.TexGenSphereNormalMap;
 import cs4620.common.texture.TexGenUVGrid;
 import cs4620.mesh.gen.MeshGenCube;
 import cs4620.mesh.gen.MeshGenCylinder;
+import cs4620.mesh.gen.MeshGenParticle;
 import cs4620.mesh.gen.MeshGenPlane;
 import cs4620.mesh.gen.MeshGenSphere;
+import cs4620.mesh.gen.MeshGenParticleCloud;
 
 
 
@@ -108,6 +110,9 @@ public class Scene {
 		m = new Mesh();
 		m.setGenerator(new MeshGenPlane());
 		addMesh(new NameBindMesh("Plane", m));
+		m = new Mesh();
+		m.setGenerator(new MeshGenParticleCloud());
+		addMesh(new NameBindMesh("ParticleCloud", m));
 
 		// Add Simple Generated Textures
 		Texture t = new Texture();
@@ -128,6 +133,22 @@ public class Scene {
 		// Add The Root Node
 		SceneObject so = new SceneObject();
 		addObject(new NameBindSceneObject(ROOT_NODE_NAME, so));
+		
+		// Programmatically add objects (particle cloud approximation);
+		
+		m = new Mesh();
+		m.setGenerator(new MeshGenParticle());
+		addMesh(new NameBindMesh("particle", m));
+		
+		
+		for (int i = 0; i < 1000; i++){
+			SceneObject particle = new SceneObject();
+			particle.setMesh("particle");
+			particle.setMaterial("Generic");
+			addObject(new NameBindSceneObject("particle_"+i, particle) );
+		}
+		
+		
 	}
 
 	public void addListener(SceneEventQueue q){

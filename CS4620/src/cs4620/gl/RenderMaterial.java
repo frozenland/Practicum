@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL20;
 
+import blister.GameTime;
 import cs4620.common.Material;
 import cs4620.common.Material.InputProvider.Type;
 import egl.GL;
@@ -107,7 +108,7 @@ public class RenderMaterial implements IDisposable {
 	public final Material sceneMaterial;
 	
 	public int unWorld, unWorldIT, unV, unP, unVP, unLPos, unLIntensity, unLCount, unCubeMap, unWorldCam, 
-		unShininess, unRoughness, unDispMagnitude, unAmbientLIntensity, unExposure, unTime, unVelocity;
+		unShininess, unRoughness, unDispMagnitude, unAmbientLIntensity, unExposure, unTime, unVelocity, unGameTime;
 	
 	float periodic_counter = 0,
 		periodic_velocity = 1;
@@ -190,6 +191,9 @@ public class RenderMaterial implements IDisposable {
 		unTime = program.getUniform("vTime");
 		unVelocity= program.getUniform("vVelocity");
 		
+		// Game Time:
+		unGameTime = program.getUniform("gameTime");
+		
 		// Try with and without suffix...
 		unLPos = program.getUniform("lightPosition");
 		if (unLPos == GL.BadUniformLocation) {
@@ -256,7 +260,7 @@ public class RenderMaterial implements IDisposable {
 		}
 	}
 	
-	public void useCameraAndLights(RenderCamera c, ArrayList<RenderLight> lights, int s, int lightCount) {
+	public void useCameraAndLights(RenderCamera c, ArrayList<RenderLight> lights, int s, int lightCount, GameTime gameTime) {
 		// Use camera
 		if(unV != GL.BadUniformLocation) {
 			GLUniform.setST(unV, c.mView, false);
@@ -332,5 +336,8 @@ public class RenderMaterial implements IDisposable {
 		periodic_velocity += (9.8 * periodic_counter) * .1;
 		if(unTime != GL.BadUniformLocation) GL20.glUniform1f(unTime,  periodic_counter);
 		if(unVelocity != GL.BadUniformLocation) GL20.glUniform1f(unVelocity, periodic_velocity);
+		if(unGameTime != GL.BadUniformLocation) GL20.glUniform1f(unGameTime,  (float)gameTime.total);
+		//System.out.println((float)gameTime.total);
+		
 	}
 }

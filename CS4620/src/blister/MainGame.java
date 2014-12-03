@@ -343,7 +343,6 @@ public abstract class MainGame implements IDisposable {
 			refreshElapsedTime();
 			onUpdateFrame();
 			onRenderFrame();
-
 			Display.update();
 		}
 	}
